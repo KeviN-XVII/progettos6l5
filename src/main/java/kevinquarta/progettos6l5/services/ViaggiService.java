@@ -39,7 +39,7 @@ public class ViaggiService {
 
 
     //    RICERCA VIAGGIO PER ID
-    public Viaggio findById(long viaggioId){
+    public Viaggio findById(Long viaggioId){
         return this.viaggioRepository.findById(viaggioId)
                 .orElseThrow(()-> new NotFoundException(viaggioId));
     }
@@ -55,11 +55,11 @@ public class ViaggiService {
 
 
 //    MODIFICA STATO
-    public Viaggio findByIdAndUpdateStato (Long viaggioId, ViaggioStatoDTO payload){
+    public Viaggio findByIdAndUpdateStato (Long viaggioId,ViaggioStatoDTO payload){
 //        RICERCO VIAGGIO
         Viaggio found = this.findById(viaggioId);
 //        MODIFICO STATO VIAGGIO
-        found.setStatoViaggio("COMPLETATO");
+        found.setStatoViaggio(payload.statoViaggio());
 //        SAVE STATO VIAGGIO
         Viaggio modifiedStato = viaggioRepository.save(found);
 //        LOG
@@ -89,7 +89,7 @@ public class ViaggiService {
 
 
     //    ELIMINA VIAGGIO
-    public void findByIdAndDelete(long viaggioId){
+    public void findByIdAndDelete(Long viaggioId){
         Viaggio found = this.findById(viaggioId);
         this.viaggioRepository.delete(found);
     }

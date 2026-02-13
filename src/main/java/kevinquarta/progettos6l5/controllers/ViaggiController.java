@@ -80,7 +80,7 @@ public class ViaggiController {
                     .toList();
             throw new ValidationException(errorsList);
         } else {
-            return this.viaggiService.findByIdAndUpdateStato(viaggioId, payload);
+            return this.viaggiService.findByIdAndUpdateStato(viaggioId,payload);
         }
     }
 

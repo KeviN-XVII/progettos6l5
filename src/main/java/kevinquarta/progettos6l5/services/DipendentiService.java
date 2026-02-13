@@ -51,7 +51,7 @@ public class DipendentiService {
     }
 
     //    RICERCA DIPENDENTE PER ID
-    public Dipendente findById(long dipendenteId){
+    public Dipendente findById(Long dipendenteId){
         return this.dipendentiRepository.findById(dipendenteId)
                 .orElseThrow(()-> new NotFoundException(dipendenteId));
     }
@@ -67,7 +67,7 @@ public class DipendentiService {
     }
 
     //    MODIFICA DIPENDENTE
-    public Dipendente findByIdAndUpdate(long userId, DipendenteDTO payload){
+    public Dipendente findByIdAndUpdate(Long userId, DipendenteDTO payload){
 //       CERCO DIPENDENTE
         Dipendente found = this.findById(userId);
 //        VALIDAZIONE DATI
@@ -89,13 +89,13 @@ public class DipendentiService {
 
 
     //    ELIMINA UTENTE
-    public void findByIdAndDelete(long userId){
+    public void findByIdAndDelete(Long userId){
         Dipendente found = this.findById(userId);
         this.dipendentiRepository.delete(found);
     }
 
     //    UPLOAD AVATAR DIPENDENTE
-    public Dipendente uploadAvatar(long dipendenteId, MultipartFile file){
+    public Dipendente uploadAvatar(Long dipendenteId, MultipartFile file){
 //        find by id dipendente
         Dipendente found = this.findById(dipendenteId);
 //        upload del file cloudinary

@@ -58,7 +58,7 @@ public class PrenotazioniService {
     }
 
     //    CERCA PRENOTAZIONE
-    public Prenotazione findById(long prenotazioneId){
+    public Prenotazione findById(Long prenotazioneId){
         return this.prenotazioniRepository.findById(prenotazioneId).orElseThrow(()-> new NotFoundException(prenotazioneId));
     }
 
@@ -72,7 +72,7 @@ public class PrenotazioniService {
 }
 
     //    ELIMINA BLOG
-    public void deletePrenotazione(long prenotazioneId){
+    public void deletePrenotazione(Long prenotazioneId){
         Prenotazione found = findById(prenotazioneId);
         prenotazioniRepository.delete(found);
     }
