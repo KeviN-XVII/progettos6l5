@@ -71,8 +71,8 @@ public class DipendentiService {
 //       CERCO DIPENDENTE
         Dipendente found = this.findById(userId);
 //        VALIDAZIONE DATI
-        if(!found.getEmail().equals(payload.email()))this.dipendentiRepository.findByEmail(payload.email()).ifPresent(user -> {
-            throw new BadRequestException("L'email "+user.getEmail()+" è già in uso!");
+        if(!found.getEmail().equals(payload.email()))this.dipendentiRepository.findByEmail(payload.email()).ifPresent(dipendente -> {
+            throw new BadRequestException("L'email "+dipendente.getEmail()+" è già in uso!");
         });
 //        MODIFICO DIPENDENTE
         found.setNome(payload.nome());
@@ -107,7 +107,7 @@ public class DipendentiService {
             found.setAvatar(imageUrl);
 
 
-            return found;
+            return dipendentiRepository.save(found);
 
 
         }catch (IOException e){

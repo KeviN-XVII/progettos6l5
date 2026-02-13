@@ -4,6 +4,7 @@ package kevinquarta.progettos6l5.services;
 import kevinquarta.progettos6l5.entities.Viaggio;
 import kevinquarta.progettos6l5.excpetions.NotFoundException;
 import kevinquarta.progettos6l5.payloads.ViaggioDTO;
+import kevinquarta.progettos6l5.payloads.ViaggioStatoDTO;
 import kevinquarta.progettos6l5.repositories.ViaggioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +53,32 @@ public class ViaggiService {
         return this.viaggioRepository.findAll(pageable);
     }
 
+
+//    MODIFICA STATO
+    public Viaggio findByIdAndUpdateStato (Long viaggioId, ViaggioStatoDTO payload){
+//        RICERCO VIAGGIO
+        Viaggio found = this.findById(viaggioId);
+//        MODIFICO STATO VIAGGIO
+        found.setStatoViaggio("COMPLETATO");
+//        SAVE STATO VIAGGIO
+        Viaggio modifiedStato = viaggioRepository.save(found);
+//        LOG
+        log.info("Lo stato è stato modificato correttamente");
+//        RETURN STATO VIAGGIO MODIFICATO
+        return modifiedStato;
+    }
+
+
+
+
+
+//        MODIFICA VIAGGIO
     public Viaggio findByIdAndUpdate(Long viaggioId,ViaggioDTO payload){
 //        RICERCO VIAGGIO
         Viaggio found = this.findById(viaggioId);
 //        MODIFICO VIAGGIO
         found.setDestinazione(payload.destinazione());
         found.setDataViaggio(payload.dataViaggio());
-        found.setStatoViaggio(payload.statoViaggio());
 //        SAVE VIAGGIO
         Viaggio modifiedViaggio = viaggioRepository.save(found);
 //        LOG

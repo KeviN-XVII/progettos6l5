@@ -52,20 +52,28 @@ public class DipendentiController {
 
 //   GET /dipendenti/123 ritorna un singolo dipendente
      @GetMapping("/{dipendenteId}")
-     public Dipendente getUserById(@PathVariable long dipendenteId) {
+     public Dipendente getDipendenteById(@PathVariable long dipendenteId) {
         return dipendentiService.findById(dipendenteId);
      }
 
 //     PUT /dipendenti/123 modifica lo specifico autore
     @PutMapping("/{dipendenteId}")
-    public Dipendente updateUser(@PathVariable long dipendenteId, @RequestBody DipendenteDTO payload) {
-        return this.dipendentiService.findByIdAndUpdate(dipendenteId, payload);
+    public Dipendente updateDipendente(@PathVariable long dipendenteId, @RequestBody @Validated DipendenteDTO payload,BindingResult validationResult) {
+        if(validationResult.hasErrors()){
+            List<String> errorsList = validationResult.getFieldErrors()
+                    .stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList();
+            throw new ValidationException(errorsList);
+        } else {
+            return this.dipendentiService.findByIdAndUpdate(dipendenteId, payload);
+        }
     }
 
 //     DELETE /dipendenti/123 elimina un dipendente specifico
     @DeleteMapping("/{dipendenteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable long dipendenteId) {
+    public void deleteDipendente(@PathVariable long dipendenteId) {
         this.dipendentiService.findByIdAndDelete(dipendenteId);
     }
 

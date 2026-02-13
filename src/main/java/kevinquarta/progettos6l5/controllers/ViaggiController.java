@@ -4,6 +4,7 @@ package kevinquarta.progettos6l5.controllers;
 import kevinquarta.progettos6l5.entities.Viaggio;
 import kevinquarta.progettos6l5.excpetions.ValidationException;
 import kevinquarta.progettos6l5.payloads.ViaggioDTO;
+import kevinquarta.progettos6l5.payloads.ViaggioStatoDTO;
 import kevinquarta.progettos6l5.services.ViaggiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,20 +52,42 @@ public class ViaggiController {
 
     //   GET /viaggio/123 ritorna un singolo viaggio
     @GetMapping("/{viaggioId}")
-    public Viaggio getUserById(@PathVariable long viaggioId) {
+    public Viaggio getViaggioById(@PathVariable long viaggioId) {
         return viaggiService.findById(viaggioId);
     }
 
     //     PUT /viaggio/123 modifica lo specifico viaggio
     @PutMapping("/{viaggioId}")
-    public Viaggio updateUser(@PathVariable long viaggioId, @RequestBody ViaggioDTO payload) {
-        return this.viaggiService.findByIdAndUpdate(viaggioId, payload);
+    public Viaggio updateViaggio(@PathVariable long viaggioId, @RequestBody @Validated ViaggioDTO payload,BindingResult validationResult) {
+        if(validationResult.hasErrors()){
+            List<String> errorsList = validationResult.getFieldErrors()
+                    .stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList();
+            throw new ValidationException(errorsList);
+        } else {
+            return this.viaggiService.findByIdAndUpdate(viaggioId, payload);
+        }
+    }
+
+    //     PUT /viaggio/123/stato modifica lo stato di un viaggio
+    @PutMapping("/{viaggioId}/stato")
+    public Viaggio updateStatoViaggio(@PathVariable long viaggioId, @RequestBody @Validated ViaggioStatoDTO payload, BindingResult validationResult) {
+        if(validationResult.hasErrors()){
+            List<String> errorsList = validationResult.getFieldErrors()
+                    .stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList();
+            throw new ValidationException(errorsList);
+        } else {
+            return this.viaggiService.findByIdAndUpdateStato(viaggioId, payload);
+        }
     }
 
     //     DELETE /viaggio/123 elimina un viaggio specifico
     @DeleteMapping("/{viaggioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable long viaggioId) {
+    public void deleteViaggio(@PathVariable long viaggioId) {
         this.viaggiService.findByIdAndDelete(viaggioId);
     }
 
