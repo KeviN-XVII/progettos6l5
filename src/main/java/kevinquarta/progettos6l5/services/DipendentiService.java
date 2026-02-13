@@ -1,6 +1,8 @@
 package kevinquarta.progettos6l5.services;
 
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import kevinquarta.progettos6l5.entities.Dipendente;
 import kevinquarta.progettos6l5.excpetions.BadRequestException;
 import kevinquarta.progettos6l5.excpetions.NotFoundException;
@@ -13,15 +15,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Map;
 
 @Service
 @Slf4j
 public class DipendentiService {
     private final DipendentiRepository dipendentiRepository;
+    private final Cloudinary cloudinaryUploader;
 
     @Autowired
-    public DipendentiService(DipendentiRepository dipendentiRepository) {
+    public DipendentiService(DipendentiRepository dipendentiRepository, Cloudinary cloudinaryUploader) {
         this.dipendentiRepository = dipendentiRepository;
+        this.cloudinaryUploader = cloudinaryUploader;
+
     }
 
 
@@ -83,6 +92,28 @@ public class DipendentiService {
     public void findByIdAndDelete(long userId){
         Dipendente found = this.findById(userId);
         this.dipendentiRepository.delete(found);
+    }
+
+    //    UPLOAD AVATAR UTENTE
+    public Dipendente uploadAvatar(long dipendenteId, MultipartFile file){
+//        controlli...
+//        find by id utente
+        Dipendente found = this.findById(dipendenteId);
+//        upload del file cloudinary
+        try {
+            Map result = cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+
+            String imageUrl = (String) result.get("secure_url");
+
+            found.setAvatar(imageUrl);
+
+
+            return found;
+
+
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
 

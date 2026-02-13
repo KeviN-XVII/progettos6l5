@@ -12,6 +12,6 @@ public record ViaggioDTO(
          String destinazione,
          @NotNull(message = "La data del viaggio è obbligatoria")
          LocalDate dataViaggio,
-         boolean statoViaggio
+         String statoViaggio
 ) {
 }

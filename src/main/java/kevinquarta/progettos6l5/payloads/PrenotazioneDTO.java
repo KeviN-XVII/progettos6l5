@@ -11,8 +11,6 @@ public record PrenotazioneDTO(
         Long viaggioId,
         @NotNull(message="L'id dipendente è obbligatorio")
         Long dipendenteId,
-        @NotNull(message = "La data è obbligatoria")
-        LocalDate dataDiRichiesta,
         @NotBlank(message="Le preferenze sono obbligatorie")
         @Size(min=2, max=500)
         String preferenze

@@ -21,11 +21,11 @@ public class Viaggio {
 
     private String destinazione;
     private LocalDate dataViaggio;
-    private boolean statoViaggio;
+    private String statoViaggio;
 
     public Viaggio(String destinazione, LocalDate dataViaggio) {
         this.destinazione = destinazione;
         this.dataViaggio = dataViaggio;
-        this.statoViaggio = false;
+        this.statoViaggio = "IN PROGRAMMA";
     }
 }
