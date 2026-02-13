@@ -44,17 +44,29 @@ public class DipendentiController {
      @GetMapping
      public Page<Dipendente> findAll(@RequestParam(defaultValue = "0")int page,
                           @RequestParam(defaultValue = "10")int size,
-                          @RequestParam(defaultValue = "name")String orderBy,
+                          @RequestParam(defaultValue = "nome")String orderBy,
                           @RequestParam(defaultValue = "asc")String sortCriteria) {
      return dipendentiService.findAll(page, size, orderBy, sortCriteria);
      }
 
 //   GET /dipendenti/123 ritorna un singolo dipendente
-     @GetMapping("/{userId}")
-     public Dipendente getUserById(@PathVariable long userId) {
-        return dipendentiService.findById(userId);
+     @GetMapping("/{dipendenteId}")
+     public Dipendente getUserById(@PathVariable long dipendenteId) {
+        return dipendentiService.findById(dipendenteId);
      }
 
+//     PUT /dipendenti/123 modifica lo specifico autore
+    @PutMapping("/{dipendenteId}")
+    public Dipendente updateUser(@PathVariable long dipendenteId, @RequestBody DipendenteDTO payload) {
+        return this.dipendentiService.findByIdAndUpdate(dipendenteId, payload);
+    }
+
+//     DELETE /dipendenti/123 elimina un dipendente specifico
+    @DeleteMapping("/{dipendenteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable long dipendenteId) {
+        this.dipendentiService.findByIdAndDelete(dipendenteId);
+    }
 
 
 

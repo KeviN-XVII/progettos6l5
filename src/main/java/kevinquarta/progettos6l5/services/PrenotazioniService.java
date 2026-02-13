@@ -72,7 +72,7 @@ public class PrenotazioniService {
 }
 
     //    ELIMINA BLOG
-    public void deleteBlog(long prenotazioneId){
+    public void deletePrenotazione(long prenotazioneId){
         Prenotazione found = findById(prenotazioneId);
         prenotazioniRepository.delete(found);
     }
