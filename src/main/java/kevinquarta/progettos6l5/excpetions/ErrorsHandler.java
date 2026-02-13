@@ -1,8 +1,7 @@
-package kevinquarta.progettos6l5.payloads;
+package kevinquarta.progettos6l5.excpetions;
 
-import kevinquarta.progettos6l5.excpetions.BadRequestException;
-import kevinquarta.progettos6l5.excpetions.NotFoundException;
-import kevinquarta.progettos6l5.excpetions.ValidationException;
+import kevinquarta.progettos6l5.payloads.ErrorsDTO;
+import kevinquarta.progettos6l5.payloads.ErrorsWithListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -68,7 +69,14 @@ public class DipendentiController {
         this.dipendentiService.findByIdAndDelete(dipendenteId);
     }
 
+//    UPLOAD IMAGE
+    @PatchMapping("/{dipendenteId}/avatar")
+    public Dipendente uploadImage(@RequestParam("profile_picture") MultipartFile file, @PathVariable long dipendenteId){
 
+        Dipendente url=this.dipendentiService.uploadAvatar(dipendenteId,file);
+
+        return url;
+    }
 
 
 

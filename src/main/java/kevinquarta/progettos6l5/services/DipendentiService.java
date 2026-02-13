@@ -94,10 +94,9 @@ public class DipendentiService {
         this.dipendentiRepository.delete(found);
     }
 
-    //    UPLOAD AVATAR UTENTE
+    //    UPLOAD AVATAR DIPENDENTE
     public Dipendente uploadAvatar(long dipendenteId, MultipartFile file){
-//        controlli...
-//        find by id utente
+//        find by id dipendente
         Dipendente found = this.findById(dipendenteId);
 //        upload del file cloudinary
         try {
